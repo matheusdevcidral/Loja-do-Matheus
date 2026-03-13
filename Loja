@@ -1,0 +1,118 @@
+from time import sleep
+from rich import print
+from rich.panel import Panel
+
+def linha(tamanho = 30):
+    return '-' * tamanho
+
+
+def cabecalho(texto):
+    painel = Panel(f'{texto.center(25)}', width=30)
+    print(painel)
+
+def erro(msg):
+    print(f'[red]ERRO! {msg}[/]')
+    sleep(1.5)
+
+
+def menu():
+    cabecalho('Loja')
+    print('1 - Ver Clientes Cadastradas')
+    print('2 - Cadastrar Novo Cliente')
+    print('3 - Lançar Faturamento')
+    print('4 - Faturamento Atual')
+    print('5 - Sair do Sistema')
+    print(linha())
+
+
+def criar_e_ler_arquivo(nome):
+    with open(nome, 'a'):
+        pass
+    with open(nome, 'r', encoding='utf-8') as p:
+        conteudo = p.read()
+        print(conteudo)
+
+
+def cadastrar_clientes():
+    nome = input('Nome: ').strip().lower()
+    if not nome:
+        erro('O nome não pode estar vazio!')
+        print('[red]Vamos começar do zero...[/]')
+        return
+    if not nome.replace(' ', '').isalpha():
+        erro('Deve conter apenas letras!')
+        print('[red]Vamos começar do zero...[/]')
+        return
+    try:
+        valor = int(input('Valor: '))
+        if valor <= 0:
+            erro('O valor deve ser um número maior que zero!')
+            print('[red]Vamos começar do zero...[/]')
+            return
+    except ValueError:
+        erro('O valor deve ser um número!')
+        print('[red]Vamos começar do zero...[/]')
+        return
+    servico = input('Serviço: ').strip().lower()
+    if not servico:
+        erro('O serviço não pode ser vazio')
+        print('[red]Vamos começar do zero[/]')
+        return
+    with open('clientes.txt', 'a', encoding='utf-8') as p:
+        p.write(f'{nome:<20} {servico:^10} R${valor:>2}\n')
+    print('Cadastro realizado com sucesso!')
+
+
+def faturamento():
+    try:
+        venda = float(input('Digite o valor da venda ou do serviço: '))
+        if venda <= 0:
+            erro('O valor deve ser um número maior que zero!')
+            print('[red]Vamos começar do zero...[/]')
+            return
+    except ValueError:
+        erro('O valor deve ser um número!')
+        print('[red]Vamos começar do zero...[/]')
+        return
+    with open('faturamento.txt', 'a', encoding='utf-8') as f:
+        f.write(f'R${venda:<30}\n')
+    print('Cadastro de valor realizado com sucesso!')
+
+def sistema():
+    while True:
+        menu()
+        try:
+            escolha = int(input('Digite sua opção: '))
+            if escolha == 1:
+                cabecalho("Clientes Cadastrados")
+                criar_e_ler_arquivo('clientes.txt')
+                sleep(1)
+            elif escolha == 2:
+                cabecalho("Novo Cadastro")
+                cadastrar_clientes()
+                sleep(1)
+            elif escolha == 3:
+                cabecalho("Cadastro de Faturamento")
+                faturamento()
+                sleep(1)
+            elif escolha == 4:
+                cabecalho("Faturamento Total")
+                criar_e_ler_arquivo('faturamento.txt')
+                sleep(1)
+            elif escolha == 5:
+                cabecalho("Saindo do sistema... Até logo!")
+                sleep(1)
+                break
+            else:
+                erro('Por favor digite um número de 1 a 5 apenas!')
+                sleep(1.5)
+        except ValueError:
+            erro('Por favor digite um número de 1 a 5 apenas!')
+            sleep(1.5)
+        except KeyboardInterrupt:
+            print()
+            cabecalho('Saindo do sistema... Até logo!')
+            sleep(1)
+            break
+
+sistema()
