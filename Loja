@@ -10,6 +10,7 @@ def cabecalho(texto):
     painel = Panel(f'{texto.center(25)}', width=30)
     print(painel)
 
+
 def erro(msg):
     print(f'[red]ERRO! {msg}[/]')
     sleep(1.5)
@@ -17,11 +18,11 @@ def erro(msg):
 
 def menu():
     cabecalho('Loja')
-    print('1 - Ver Clientes Cadastradas')
-    print('2 - Cadastrar Novo Cliente')
-    print('3 - Lançar Faturamento')
-    print('4 - Faturamento Atual')
-    print('5 - Sair do Sistema')
+    print('1 :books: Ver Clientes Cadastradas')
+    print('2 :heavy_plus_sign:  Cadastrar Novo Cliente')
+    print('3 :heavy_dollar_sign: Lançar Faturamento')
+    print('4 :heavy_check_mark:  Faturamento Atual')
+    print('5 :heavy_large_circle:  Sair do Sistema')
     print(linha())
 
 
@@ -77,6 +78,7 @@ def faturamento():
     with open('faturamento.txt', 'a', encoding='utf-8') as f:
         f.write(f'R${venda:<30}\n')
     print('Cadastro de valor realizado com sucesso!')
+
 
 def sistema():
     while True:
