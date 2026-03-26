@@ -11,7 +11,7 @@ def header(text):
     print(panel)
 
 
-def error(msg):
+def error(msg, restart = True):
     print(f'[red]ERROR! {msg}[/]')
     sleep(1.5)
 
@@ -35,50 +35,49 @@ def create_and_read_doc(name):
 
 
 def register_new_customer():
-    name = input('Name: ').strip().lower()
-    if not name:
-        error('The name cannot be empty')
-        print("[red]Let's start from the beginning...[/]")
-        return
-    if not name.replace(' ', '').isalpha():
-        error('Must contain only letters!')
-        print("[red]Let's start from the beginning...[/]")
-        return
-    try:
-        price = int(input('Price: '))
-        if price <= 0:
-            error('The value must be a number greater than zero!')
-            print("[red]Let's start from the beginning...[/]")
-            return
-    except ValueError:
-        error('The value must be a number')
-        print("[red]Let's start from the beginning...[/]")
-        return
-    service = input('Service: ').strip().lower()
-    if not service:
-        error('The service cannot be empty!')
-        print("[red]Let's start from the beginning...[/]")
-        return
-    with open('customers.txt', 'a', encoding='utf-8') as p:
-        p.write(f'{name:<20} {service:^10} R${price:>2}\n')
-    print('Registration Successful!')
+    while True:
+        name = input('Name: ').strip().lower()
+        if not name:
+            error('The name cannot be empty')
+            continue
+        if not name.replace(' ', '').isalpha():
+            error('Must contain only letters!')
+            continue
+        break
+    while True:
+        try:
+            price = int(input('Price: '))
+            if price <= 0:
+                error('The value must be a number greater than zero!')
+                continue
+            break
+        except ValueError:
+            error('The value must be a number')
+    while True:
+        service = input('Service: ').strip().lower()
+        if not service:
+            error('The service cannot be empty!')
+            continue
+        with open('customers.txt', 'a', encoding='utf-8') as p:
+            p.write(f'{name:<20} {service:^10} R${price:>2}\n')
+        print('Registration Successful!')
+        break
 
 
 def revenue():
-    try:
-        sell = float(input('Enter the selling price: '))
-        if sell <= 0:
-            error('The value must be a number greater than zero!')
-            print("[red]Let's start from the beginning...[/]")
-            return
-    except ValueError:
-        error('The value must be a number!')
-        print("[red]Let's start from the beginning...[/]")
-        return
-    with open('revenue.txt', 'a', encoding='utf-8') as f:
-        f.write(f'R${sell:<30}\n')
-    print('Value registration completed successfully!')
-
+    while True:
+        try:
+            sell = float(input('Enter the selling price: '))
+            if sell <= 0:
+                error('The value must be a number greater than zero!')
+                continue
+        except ValueError:
+            error('The value must be a number!')
+            continue
+        with open('revenue.txt', 'a', encoding='utf-8') as f:
+            f.write(f'R${sell:<30}\n')
+        print('Value registration completed successfully!')
+        break
 
 def system():
     while True:
