@@ -79,6 +79,7 @@ def revenue():
         print('Value registration completed successfully!')
         break
 
+
 def system():
     while True:
         menu()
