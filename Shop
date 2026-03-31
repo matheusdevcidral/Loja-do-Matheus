@@ -38,7 +38,7 @@ def register_new_customer():
     while True:
         name = input('Name: ').strip().lower()
         if not name:
-            error('The name cannot be empty')
+            error('The name cannot be empty!')
             continue
         if not name.replace(' ', '').isalpha():
             error('Must contain only letters!')
@@ -52,7 +52,7 @@ def register_new_customer():
                 continue
             break
         except ValueError:
-            error('The value must be a number')
+            error('The value must be a number!')
     while True:
         service = input('Service: ').strip().lower()
         if not service:
