@@ -11,7 +11,7 @@ def header(text):
     print(panel)
 
 
-def error(msg, restart = True):
+def error(msg):
     print(f'[red]ERROR! {msg}[/]')
     sleep(1.5)
 
